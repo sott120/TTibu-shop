@@ -1,6 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Col } from "react-bootstrap";
-
 let data = [
     {
         id: 0,
@@ -24,24 +21,4 @@ let data = [
     },
 ];
 
-function Content(props) {
-    return props.shoes.map((el, i) => {
-        return (
-            <Col md={4} key={i}>
-                <img
-                    src={
-                        "https://codingapple1.github.io/shop/shoes" +
-                        (props.shoes[i].id + 1) +
-                        ".jpg"
-                    }
-                    alt=""
-                    width="80%"
-                />
-                <h4>{props.shoes[i].title}</h4>
-                <p>{props.shoes[i].price}</p>
-            </Col>
-        );
-    });
-}
-
-export { data, Content };
+export default data;
