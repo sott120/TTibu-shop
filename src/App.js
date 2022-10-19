@@ -61,10 +61,15 @@ function App() {
                 />
                 <Route path="*" element={<div>404페이지</div>} />
                 <Route path="/detail" element={<Detail />} />
+
                 <Route path="/about" element={<About />}>
                     <Route path="member" element={<div>멤버페이지입니다.</div>} />
                     <Route path="location" element={<About />} />
                     {/* 라우트안에 라우트 nested routes /about/member 이랑 같다 상위주소에있는거랑 같이 보여줌*/}
+                </Route>
+                <Route path="/event" element={ <Event />}>
+                    <Route path="one" element={ <div>신규가입 쿠폰 받기</div> }></Route>
+                    <Route path="two" element={ <div>구매 후기 쓰고 포인트 받기</div> }></Route>
                 </Route>
             </Routes>
         </div>
@@ -87,6 +92,15 @@ function About(){
             <h4>회사 정보</h4>
             <Outlet></Outlet>
             {/* nested routes의 element 보여주는곳은 Outlet */}
+        </div>
+    )
+}
+
+function Event(){
+    return(
+        <div>
+            <h4>오늘의 이벤트</h4>
+            <Outlet></Outlet>
         </div>
     )
 }
