@@ -15,7 +15,7 @@ function App() {
         <div className="App">
             <Navbar bg="light" variant="light">
                 <Container>
-                    <Navbar.Brand href="#home">TTibu Shop</Navbar.Brand>
+                    <Navbar.Brand onClick={()=>{navigate("/")}}>TTibu Shop</Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link
                             onClick={() => {
@@ -26,7 +26,7 @@ function App() {
                         </Nav.Link>
                         <Nav.Link
                             onClick={() => {
-                                navigate("/detail");
+                                navigate("/detail/0");
                             }}
                         >
                             Detail
@@ -51,7 +51,7 @@ function App() {
                                 <Row>
                                     {shoes.map((el, i) => {
                                         return (
-                                            <Content shoes={shoes[i]} i={i} />
+                                            <Content shoes={shoes[i]} i={i} key={i} />
                                         );
                                     })}
                                 </Row>
@@ -60,8 +60,8 @@ function App() {
                     }
                 />
                 <Route path="*" element={<div>404페이지</div>} />
-                <Route path="/detail" element={<Detail />} />
-
+                <Route path="/detail/:params" element={<Detail shoes={shoes}/>} />
+                {/* :id url파라미터 */}
                 <Route path="/about" element={<About />}>
                     <Route path="member" element={<div>멤버페이지입니다.</div>} />
                     <Route path="location" element={<About />} />
