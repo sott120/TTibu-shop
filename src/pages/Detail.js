@@ -20,17 +20,15 @@ let Box = styled.div`
 function Detail(props) {
     let {params} = useParams();
     let findId = props.shoes.find( (e) => e.id == params);
-    let [alert, setAlert] = useState(true);
-    
-    useEffect(()=>{
-        //라이프사이클 훅 마운트, 업데이트 시 실행
-        let a = setTimeout(() => {
-            setAlert(false);
-        }, 2000);
-        return ()=>{
-            clearTimeout(a)
+    let [myalert, setAlert] = useState(true);
+    let [num, setNum] = useState("");
+
+
+    useEffect(() => {
+        if (isNaN(num) == true) {
+            alert("그러지마세요");
         }
-    },[])//마운트될때만 한번 실행.
+    }, [num])
     
     return (
         <div className="container">
@@ -39,7 +37,10 @@ function Detail(props) {
                 <YellowBtn bg="orange">버튼</YellowBtn>
                 props 문법 컴포넌트 재활용 가능
             </Box> */}
-            {alert && <div  className="alert alert-warning">2초이내 구매시 할인</div>}
+            {myalert && (
+                <div className="alert alert-warning">2초이내 구매시 할인</div>
+            )}
+            <input type="text" onChange={(e)=>{setNum(e.target.value);}} />
             <div className="row">
                 <div className="col-md-6">
                     <img

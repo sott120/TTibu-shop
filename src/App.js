@@ -7,9 +7,10 @@ import bg from "./img/bg.png";
 import data from "./data";
 import Detail from "./pages/Detail";
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
+import axios from "axios";
 
 function App() {
-    let [shoes] = useState(data);
+    let [shoes, setShoes] = useState(data);
     let navigate = useNavigate();//use어쩌구는 훅의 일종. 훅: 유용한것들이 들어있는 함수같은거
     return (
         <div className="App">
@@ -56,6 +57,15 @@ function App() {
                                     })}
                                 </Row>
                             </Container>
+                            <button onClick={()=>{
+                                axios.get("https://codingapple1.github.io/shop/data2.json").then((result)=>{
+                                    let copyShoes = [...shoes, ...result.data];
+                                    setShoes(copyShoes);
+                                })
+                                .catch(()=>{
+                                    console.log('실패');
+                                })
+                            }}>더보기</button>
                         </>
                     }
                 />
@@ -77,8 +87,9 @@ function App() {
 }
 
 function Content(props) {
+    let navigate = useNavigate();
      return (
-         <Col md={4} >
+         <Col md={4} onClick={()=>{navigate("/detail/" + props.i)}}>
              <img src={"https://codingapple1.github.io/shop/shoes"+ (props.i+1) +".jpg"} alt="" width="80%"/>
              <h4>{props.shoes.title}</h4>
              <p>{props.shoes.price}</p>
