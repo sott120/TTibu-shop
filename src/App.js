@@ -12,6 +12,8 @@ import axios from "axios";
 function App() {
     let [shoes, setShoes] = useState(data);
     let navigate = useNavigate();//use어쩌구는 훅의 일종. 훅: 유용한것들이 들어있는 함수같은거
+    let [btnCount,setBtnCount] = useState(2);
+    let [text,setText] = useState('');
     return (
         <div className="App">
             <Navbar bg="light" variant="light">
@@ -57,15 +59,26 @@ function App() {
                                     })}
                                 </Row>
                             </Container>
-                            <button onClick={()=>{
-                                axios.get("https://codingapple1.github.io/shop/data2.json").then((result)=>{
-                                    let copyShoes = [...shoes, ...result.data];
-                                    setShoes(copyShoes);
+                            {text}
+                            {btnCount == 4 ? null : <button onClick={()=>{
+                                setText("로딩중입니다.");
+                                axios.get("https://codingapple1.github.io/shop/data"+ btnCount +".json").then((result)=>{
+                                let copyShoes = [...shoes, ...result.data];
+                                setShoes(copyShoes);
+                                setText("");
                                 })
                                 .catch(()=>{
                                     console.log('실패');
+                                     setText("");
+
+                                    alert("상품이 없습니다.");
                                 })
-                            }}>더보기</button>
+                            
+                                setBtnCount(btnCount+1);
+                               
+                                
+
+                            }}>더보기</button>}
                         </>
                     }
                 />
