@@ -24,15 +24,22 @@ function Detail(props) {
     let [myalert, setAlert] = useState(true);
     let [num, setNum] = useState("");
     let [tabMenu, setTabMenu] = useState(0);
-
+    let [fade2, setFade2] = useState("");
     useEffect(() => {
         if (isNaN(num) == true) {
             alert("그러지마세요");
         }
     }, [num])
     
+    useEffect(()=>{
+        setFade2("end");
+        return()=>{
+            setFade2("");
+        }
+    },[])
+
     return (
-        <div className="container">
+        <div className={"container start "+ fade2}>
             {/* <Box>
                 <YellowBtn bg="blue">버튼</YellowBtn>
                 <YellowBtn bg="orange">버튼</YellowBtn>
