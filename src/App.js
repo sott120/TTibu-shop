@@ -1,19 +1,24 @@
 /* eslint-disable */
 import "./App.css";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Nav, Navbar, Row, Col } from "react-bootstrap";
 import bg from "./img/bg.png";
 import data from "./data";
-import Detail from "./pages/Detail";
+import Detail from "./routes/Detail";
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import axios from "axios";
+import Cart from "./routes/Cart";
+
+export let Context1 = createContext();
+
 
 function App() {
     let [shoes, setShoes] = useState(data);
     let navigate = useNavigate();//use어쩌구는 훅의 일종. 훅: 유용한것들이 들어있는 함수같은거
     let [btnCount,setBtnCount] = useState(2);
     let [text,setText] = useState('');
+    let [items, setItems] = useState([10,11,12]);
     return (
         <div className="App">
             <Navbar bg="light" variant="light">
@@ -46,10 +51,7 @@ function App() {
                     path="/"
                     element={
                         <>
-                            <div
-                                className="main-bg"
-                                style={{ backgroundImage: "url(" + bg + ")" }}
-                            ></div>
+                            <div className="main-bg" style={{ backgroundImage: "url(" + bg + ")" }}></div>
                             <Container>
                                 <Row>
                                     {shoes.map((el, i) => {
@@ -83,17 +85,13 @@ function App() {
                     }
                 />
                 <Route path="*" element={<div>404페이지</div>} />
-                <Route path="/detail/:params" element={<Detail shoes={shoes}/>} />
+                <Route path="/detail/:params" element={
+                <Context1.Provider value={{items,shoes}}>
+                    <Detail shoes={shoes}/>
+                </Context1.Provider>
+                } />
                 {/* :id url파라미터 */}
-                <Route path="/about" element={<About />}>
-                    <Route path="member" element={<div>멤버페이지입니다.</div>} />
-                    <Route path="location" element={<About />} />
-                    {/* 라우트안에 라우트 nested routes /about/member 이랑 같다 상위주소에있는거랑 같이 보여줌*/}
-                </Route>
-                <Route path="/event" element={ <Event />}>
-                    <Route path="one" element={ <div>신규가입 쿠폰 받기</div> }></Route>
-                    <Route path="two" element={ <div>구매 후기 쓰고 포인트 받기</div> }></Route>
-                </Route>
+                <Route path="/cart" element={ <Cart /> } />
             </Routes>
         </div>
     );
@@ -110,22 +108,4 @@ function Content(props) {
      );
 }
 
-function About(){
-    return(
-        <div>
-            <h4>회사 정보</h4>
-            <Outlet></Outlet>
-            {/* nested routes의 element 보여주는곳은 Outlet */}
-        </div>
-    )
-}
-
-function Event(){
-    return(
-        <div>
-            <h4>오늘의 이벤트</h4>
-            <Outlet></Outlet>
-        </div>
-    )
-}
 export default App;
