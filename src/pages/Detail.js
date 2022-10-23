@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import Nav from "react-bootstrap/Nav";
 
 let YellowBtn = styled.button`
     background: ${(props) => props.bg};
@@ -22,7 +23,7 @@ function Detail(props) {
     let findId = props.shoes.find( (e) => e.id == params);
     let [myalert, setAlert] = useState(true);
     let [num, setNum] = useState("");
-
+    let [tabMenu, setTabMenu] = useState(0);
 
     useEffect(() => {
         if (isNaN(num) == true) {
@@ -40,7 +41,12 @@ function Detail(props) {
             {myalert && (
                 <div className="alert alert-warning">2초이내 구매시 할인</div>
             )}
-            <input type="text" onChange={(e)=>{setNum(e.target.value);}} />
+            <input
+                type="text"
+                onChange={(e) => {
+                    setNum(e.target.value);
+                }}
+            />
             <div className="row">
                 <div className="col-md-6">
                     <img
@@ -59,6 +65,35 @@ function Detail(props) {
                     <button className="btn btn-danger">주문하기</button>
                 </div>
             </div>
+            <Nav variant="tabs" defaultActiveKey="link0">
+                <Nav.Item onClick={()=>{setTabMenu(0)}}>
+                    <Nav.Link eventKey="link0">Option1</Nav.Link>
+                </Nav.Item>
+                <Nav.Item onClick={()=>{setTabMenu(1)}}>
+                    <Nav.Link eventKey="link1">Option2</Nav.Link>
+                </Nav.Item>
+                <Nav.Item onClick={()=>{setTabMenu(2)}}>
+                    <Nav.Link eventKey="link2">Option3</Nav.Link>
+                </Nav.Item>
+            </Nav>
+            <TabContent tabMenu={tabMenu} />          
+        </div>
+    );
+}
+
+function TabContent({ tabMenu }) {
+    let [fade , setFade] = useState('');
+    useEffect(()=>{
+        let time = setTimeout(() => { setFade("end") }, 100);
+        return() => {
+            clearTimeout(time);
+            setFade("");
+        }
+    },[tabMenu])
+
+    return (
+        <div className={"start " + fade}>
+            {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tabMenu]}
         </div>
     );
 }
