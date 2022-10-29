@@ -3,6 +3,8 @@ import { useState, useEffect, useRef, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Nav from "react-bootstrap/Nav";
+import { useDispatch, useSelector } from "react-redux";
+import { addCart } from "./../store";
 
 import { Context1 } from "../App.js";
 
@@ -27,6 +29,8 @@ function Detail(props) {
     let [num, setNum] = useState("");
     let [tabMenu, setTabMenu] = useState(0);
     let [fade2, setFade2] = useState("");
+    let state = useSelector((state)=>{ return state });
+    let dispatch = useDispatch();
 
     useEffect(() => {
         if (isNaN(num) == true) {
@@ -72,7 +76,9 @@ function Detail(props) {
                     <h4 className="pt-5">{findId.title}</h4>
                     <p>{findId.content}</p>
                     <p>{findId.price}</p>
-                    <button className="btn btn-danger">주문하기</button>
+                    <button className="btn btn-danger" onClick={()=>{
+                        dispatch(addCart(findId))
+                    }}>주문하기</button>
                 </div>
             </div>
             <Nav variant="tabs" defaultActiveKey="link0">
