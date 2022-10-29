@@ -28,10 +28,10 @@ function Cart(){
                                 <td>{state.myCart[i].name}</td>
                                 <td>{state.myCart[i].count}</td>
                                 <td>
-                                    <button onClick={()=>{dispatch(cartIncrease(i));}}>
+                                    <button onClick={()=>{dispatch(cartIncrease(state.myCart[i].id));}}>
                                         +
                                     </button>
-                                    <button onClick={()=>{dispatch(cartDecrease(i));}}>
+                                    <button onClick={()=>{dispatch(cartDecrease(state.myCart[i].id));}}>
                                         -
                                     </button>
                                 </td>

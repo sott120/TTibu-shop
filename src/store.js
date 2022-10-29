@@ -1,4 +1,4 @@
-import { configureStore, createSlice, current } from "@reduxjs/toolkit";
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 import user from "./store/userSlice"
 
 let myCart = createSlice({
@@ -9,24 +9,19 @@ let myCart = createSlice({
     ],
     reducers: {
         cartIncrease(state, action) {
-            const findId = state[action.payload].id;
-            const findObj = state.filter((arr) => arr.id === findId);
-            findObj[0].count += 1;
+            const findObj = state.findIndex((a) => { return a.id === action.payload });
+            state[findObj].count ++;
         },
         cartDecrease(state, action) {
-            const findId = state[action.payload].id;
-            const findObj = state.filter((arr) => arr.id === findId);
-            if (findObj[0].count > 1) {
-                findObj[0].count += -1;
+            const findObj = state.findIndex((a) => { return a.id === action.payload });
+            if (state[findObj].count > 1) {
+                state[findObj].count--;
             } else {
                 return;
             }
         },
         addCart(state, action) {
             state.push(action.payload);
-            console.log(current(state[0]));
-            console.log(current(state[1]));
-            console.log(state[2]);
         }
     },
 });
