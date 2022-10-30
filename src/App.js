@@ -12,6 +12,8 @@ import Cart from "./routes/Cart";
 
 export let Context1 = createContext();
 
+localStorage.setItem("views", JSON.stringify([]));
+
 
 function App() {
     let [shoes, setShoes] = useState(data);
@@ -56,7 +58,7 @@ function App() {
                                 <Row>
                                     {shoes.map((el, i) => {
                                         return (
-                                            <Content shoes={shoes[i]} i={i} key={i} />
+                                            <Content shoes={shoes[i]} id={el.id} i={i} key={i} />
                                         );
                                     })}
                                 </Row>
@@ -100,12 +102,23 @@ function App() {
 function Content(props) {
     let navigate = useNavigate();
      return (
-         <Col md={4} onClick={()=>{navigate("/detail/" + props.i)}}>
+         <Col md={4} onClick={()=>{
+            navigate("/detail/" + props.i);
+            view(props.id)
+            }}>
              <img src={"https://codingapple1.github.io/shop/shoes"+ (props.i+1) +".jpg"} alt="" width="80%"/>
              <h4>{props.shoes.title}</h4>
              <p>{props.shoes.price}</p>
          </Col>
      );
+}
+
+function view(i){
+    let getViews = JSON.parse(localStorage.getItem('views'));
+    console.log(getViews)
+    let a = new Set(getViews);
+    a.add(i)
+    localStorage.setItem('views', JSON.stringify([...a]))
 }
 
 export default App;

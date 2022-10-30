@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Nav from "react-bootstrap/Nav";
 import { useDispatch } from "react-redux";
-import { addCart } from "./../store";
+import { addItem } from "./../store";
 
 import { Context1 } from "../App.js";
 
@@ -76,7 +76,7 @@ function Detail(props) {
                     <p>{findId.content}</p>
                     <p>{findId.price}</p>
                     <button className="btn btn-danger" onClick={()=>{
-                        dispatch(addCart({ id: findId.id , name: findId.title, count: 1 }))
+                        dispatch(addItem({ id: findId.id , name: findId.title, count: 1 }))
                     }}>주문하기</button>
                 </div>
             </div>

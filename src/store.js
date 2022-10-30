@@ -9,24 +9,35 @@ let myCart = createSlice({
     ],
     reducers: {
         cartIncrease(state, action) {
-            const findObj = state.findIndex((a) => { return a.id === action.payload });
-            state[findObj].count ++;
+            const findId = state.findIndex((a) => { return a.id === action.payload });
+            state[findId].count ++;
         },
         cartDecrease(state, action) {
-            const findObj = state.findIndex((a) => { return a.id === action.payload });
-            if (state[findObj].count > 1) {
-                state[findObj].count--;
+            const findId = state.findIndex((a) => { return a.id === action.payload });
+            if (state[findId].count > 1) {
+                state[findId].count--;
             } else {
                 return;
             }
         },
-        addCart(state, action) {
-            state.push(action.payload);
+        addItem(state, action) {
+            const findId = state.findIndex((a) => { return a.id === action.payload.id });
+            if (findId !== -1) {
+                state[findId].count++;
+            } else {
+                state.push(action.payload);
+                console.log(state);
+            }
+            
+        },
+        deleteItem(state, action){
+            const findId = state.findIndex((a) => { return a.id === action.payload });
+            state.splice(findId,1);
         }
     },
 });
 
-export let { cartIncrease, cartDecrease, addCart } = myCart.actions;
+export let { cartIncrease, cartDecrease, addItem, deleteItem } = myCart.actions;
 
 export default configureStore({
     reducer: {
