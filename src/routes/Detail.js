@@ -44,6 +44,13 @@ function Detail(props) {
         }
     },[])
 
+    useEffect(()=>{
+        let views = JSON.parse(localStorage.getItem("views"));
+        let viewsArr = new Set(views);
+        viewsArr.add(findId.id);
+        localStorage.setItem("views", JSON.stringify([...viewsArr]));
+    },[])
+
     return (
         <div className={"container start " + fade2}>
             {/* <Box>

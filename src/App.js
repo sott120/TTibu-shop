@@ -104,7 +104,6 @@ function Content(props) {
      return (
          <Col md={4} onClick={()=>{
             navigate("/detail/" + props.i);
-            view(props.id)
             }}>
              <img src={"https://codingapple1.github.io/shop/shoes"+ (props.i+1) +".jpg"} alt="" width="80%"/>
              <h4>{props.shoes.title}</h4>
@@ -113,12 +112,5 @@ function Content(props) {
      );
 }
 
-function view(i){
-    let getViews = JSON.parse(localStorage.getItem('views'));
-    console.log(getViews)
-    let a = new Set(getViews);
-    a.add(i)
-    localStorage.setItem('views', JSON.stringify([...a]))
-}
 
 export default App;
