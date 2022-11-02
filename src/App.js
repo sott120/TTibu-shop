@@ -9,13 +9,19 @@ import Detail from "./routes/Detail";
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import axios from "axios";
 import Cart from "./routes/Cart";
+import { useEffect } from "react";
 
 export let Context1 = createContext();
 
-localStorage.setItem("views", JSON.stringify([]));
+
 
 
 function App() {
+    useEffect(()=>{
+        !localStorage.getItem("views") && localStorage.setItem("views", JSON.stringify([]))
+    },[])
+
+
     let [shoes, setShoes] = useState(data);
     let navigate = useNavigate();//use어쩌구는 훅의 일종. 훅: 유용한것들이 들어있는 함수같은거
     let [btnCount,setBtnCount] = useState(2);

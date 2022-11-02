@@ -46,9 +46,15 @@ function Detail(props) {
 
     useEffect(()=>{
         let views = JSON.parse(localStorage.getItem("views"));
-        let viewsArr = new Set(views);
-        viewsArr.add(findId.id);
-        localStorage.setItem("views", JSON.stringify([...viewsArr]));
+        let newViews;
+        if (views.includes(findId.id)) {
+            newViews = views.filter((x)=>x === findId.id).concat(views.filter((x)=>x !== findId.id));
+            localStorage.setItem("views", JSON.stringify(newViews));
+        } else {
+            views.splice(0,0,findId.id);
+            localStorage.setItem("views", JSON.stringify(views));
+        }
+        
     },[])
 
     return (
